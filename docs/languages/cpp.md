@@ -16,9 +16,9 @@ If you just want a lightweight tool to edit your C and C++ files, VS Code has yo
 
 If you run into any issues or have suggestions for us, please file [issues and suggestions on GitHub](https://github.com/Microsoft/vscode-cpptools/issues). If you haven’t already provided us feedback, please take this [quick survey](https://www.research.net/r/VBVV6C6) to help shape this extension for your needs.
 
-## Getting Started
+# Getting Started
 
-**To install the Microsoft C/C++ extension:**
+## Installing the Microsoft C/C++ extension:
 
 * Open VS Code.
 * Click the Extensions View icon on the Sidebar.
@@ -26,7 +26,8 @@ If you run into any issues or have suggestions for us, please file [issues and s
 * Click **Install**, then click **Reload**.
 * Open a folder that contains your C/C++ code.
 
-**To enable code completion and navigation, you will need to generate a `c_cpp_properties.json` file:**
+## Enabling IntelliSense and code navigation:
+To enable IntelliSense and code navigation features, you will need to first generate a `c_cpp_properties.json` file.
 
 * Hover over any green squiggle in a source file (e.g. a #include statement).
 * Click the lightbulb that appears underneath the mouse cursor.
@@ -56,8 +57,7 @@ You should now see a `tasks.json` file in your workspace `.vscode` folder that l
             "command": "g++",
             "type": "shell",
             "args": ["-g", "main.cpp"]         
-        }
-    ]
+        }    ]
 }
 ```
 
