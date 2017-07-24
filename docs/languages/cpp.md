@@ -49,11 +49,15 @@ You should now see a `tasks.json` file in your workspace `.vscode` folder that l
 
 ```json
 {
-    "version": "0.1.0",
-    "command": "g++",
-    "isShellCommand": true,
-    "showOutput": "always",
-    "args": ["-g", "main.cpp"]
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "taskName": "echo",
+            "command": "g++",
+            "type": "shell",
+            "args": ["-g", "main.cpp"]         
+        }
+    ]
 }
 ```
 
