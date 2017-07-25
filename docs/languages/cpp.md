@@ -1,4 +1,4 @@
----	
+\---	
 Order: 14
 Area: languages
 TOCTitle: C++
@@ -18,7 +18,7 @@ If you run into any issues or have suggestions for us, please file [issues and s
 
 # Getting Started
 
-## Installing the Microsoft C/C++ extension:
+## Installing the Microsoft C/C++ extension
 
 * Open VS Code.
 * Click the Extensions View icon on the Sidebar.
@@ -26,7 +26,7 @@ If you run into any issues or have suggestions for us, please file [issues and s
 * Click **Install**, then click **Reload**.
 * Open a folder that contains your C/C++ code.
 
-## Enabling IntelliSense and code navigation:
+## Enabling IntelliSense and code navigation
 To enable IntelliSense and code navigation features, you will need to first generate a `c_cpp_properties.json` file.
 
 * Hover over any green squiggle in a source file (e.g. a #include statement).
