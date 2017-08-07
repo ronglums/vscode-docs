@@ -16,9 +16,9 @@ If you just want a lightweight tool to edit your C++ files, VS Code has you cove
 
 If you run into any issues or have suggestions for us, please file [issues and suggestions on GitHub](https://github.com/Microsoft/vscode-cpptools/issues). If you haven’t already provided us feedback, please take this [quick survey](https://www.research.net/r/VBVV6C6) to help shape this extension for your needs.
 
-## Getting Started
+# Getting Started
 
-**To install the Microsoft C/C++ extension:**
+## Installing the Microsoft C/C++ extension
 
 * Open VS Code.
 * Click the Extensions View icon on the Sidebar.
@@ -26,54 +26,32 @@ If you run into any issues or have suggestions for us, please file [issues and s
 * Click **Install**, then click **Reload**.
 * Open a folder that contains your C/C++ code.
 
-**To enable code completion and navigation, you will need to generate a `c_cpp_properties.json` file:**
+# Editing Code
+
+### IntelliSense and code browsing
+The preview release of the extension provides the following IntelliSense and code browsing capabilities:
+* Auto-completion
+* Quick Info tooltips
+* Error Squiggles
+* Parameter Hints
+* Code Formatting (Clang-format)
+* Symbol Searching
+* Go to Definition/Declaration
+* Peek Definition/Declaration
+* Class/Method Navigation
+
+## Enabling IntelliSense and code browsing
+To enable IntelliSense and code browsing features, you will first need to generate a `c_cpp_properties.json` file.
 
 * Hover over any green squiggle in a source file (e.g. a #include statement).
 * Click the lightbulb that appears underneath the mouse cursor.
 * Click **Add include path to settings**.
 
-This will generate a `c_cpp_properties.json` file that allows you to add additional include paths to properly enable code navigation and auto-completion.
+This will generate a `c_cpp_properties.json` file with a set of default paths to your system headers based on your operating system. And you can add any additional include paths there. 
 
 >**Note:** You can also generate or edit a `c_cpp_properties.json` file with the **C/Cpp: Edit Configurations** command from the __Command Palette__ (`kb(workbench.action.showCommands)`).
 
-**If you want to build your application from VS Code, you will need to generate a `tasks.json` file:**
-
-* Open the **Command Palette** (`kb(workbench.action.showCommands)`).
-* Select the **Tasks: Configure Task Runner** command and you will see a list of task runner templates.
-* Select **Others** to create a task which runs an external command.
-* Change the `command` to the command line expression you use to build your application (e.g. `g++ -g main.cpp`).
-* Add any required args (e.g. `-g` to build for debugging).
-* You can now build your application with (`kb(workbench.action.tasks.build)`)
-
-You should now see a `tasks.json` file in your workspace `.vscode` folder that looks something like:
-
-```json
-{
-    "version": "0.1.0",
-    "command": "g++",
-    "isShellCommand": true,
-    "showOutput": "always",
-    "args": ["-g", "main.cpp"]
-}
-```
-
-For more information on tasks, see [Integrate with External Tools via Tasks](/docs/editor/tasks).
-
-**To enable debugging, you will need to generate a `launch.json` file:**
-
-* Navigate to the Debug view by clicking the Debug icon in the Sidebar.
-* In the **Debug** view, click the **Configure** icon.
-* Select `C++ (GDB/LLDB)` (to use GDB or LLDB) or `C++ (Windows)` (to use the Visual Studio Windows Debugger) from the **Select Environment** dropdown. This creates a `launch.json` file for editing with two configurations:
-  * **C++ Launch** defines the properties for launching your application when you start debugging.
-  * **C++ Attach** defines the properties for attaching to a process that's already running.
-* Update the `program` property with the path to the program you are debugging.
-* If you want your application to build when you start debugging, add a `preLaunchTask` property with the name of the build task you created in `tasks.json` ("g++" in the example above).
-
-To learn more, see [Configuring launch.json for C/C++ debugging](https://github.com/Microsoft/vscode-cpptools/blob/master/launch.md).
-
-If you are debugging with GDB on Windows, see [Windows Debugging on Cygwin/MinGW](#debug_windows_gdb).
-
-## Editing Code
+ There are two settings in this file that you should pay particular attention to: `includePath` and  `browse.path`. `includePath` is the setting used by the  "Default"  IntelliSense engine and  "browse.path"  is the setting used by the tag parser engine.
 
 ### Code Formatting
 
@@ -84,7 +62,7 @@ You can format an entire file with **Format Document** (`kb(editor.action.format
 * `C_Cpp.clang_format_formatOnSave` - to format when you save your file.
 * `editor.formatOnType` - to format as you type (triggered on the `kbstyle(;)` character).
 
-By default, the clang-format style is set to "file" which means it looks for a `.clang-format` file inside your workspace. If the `.clang-format` file is found, formatting is applied according the settings specified in the file. If no `.clang-format` file is found in your workspace, formatting is applied according to a default style specified in the `C_Cpp.clang_format_fallbackStyle` [setting](/docs/getstarted/settings.md) instead. Currently, the default formatting style is "Visual Studio". Using "Visual Studio" formatting ensures that source code formatting will be compatible in both VS Code and Visual Studio Community.
+By default, the clang-format style is set to "file" which means it looks for a `.clang-format` file inside your workspace. If the `.clang-format` file is found, formatting is applied according to the settings specified in the file. If no `.clang-format` file is found in your workspace, formatting is applied according to a default style specified in the `C_Cpp.clang_format_fallbackStyle` [setting](/docs/getstarted/settings.md) instead. Currently, the default formatting style is "Visual Studio". Using "Visual Studio" formatting ensures that source code formatting will be compatible in both VS Code and Visual Studio Community.
 
 The "Visual Studio" clang-format style is not yet an official OOTB clang-format style but it implies the following clang-format settings:
 
@@ -105,13 +83,11 @@ For example on the Windows platform:
   "C_Cpp.clang_format_path": "C:\\Program Files (x86)\\LLVM\\bin\\clang-format.exe"
 ```
 
-### Fuzzy Auto-Complete (preview)
+### Fuzzy Auto-Complete
 
 Fuzzy auto-complete is powered by an enhanced tag-parser approach. Although suggestions are not based on semantic analysis of your code, this feature provides a wider selection of matches than the single-file IntelliSense experience provided today.
 
-In particular, this feature's capabilities give a good experience for C code.
-
-## Navigating Code
+# Navigating Code
 
 The source code navigation features provided by the C/C++ extension are powerful tools for understanding and getting around in your codebase. These features are powered by tags stored in an offline database of symbol information (in the file `browse.VC.db`). With the C/C++ extension installed, this database is generated whenever a folder containing C++ source code files is loaded into VS Code. The platform indicator (Win32 in the figure below) turns red and appears next to a flame icon while the tag-parser is generating this information.
 
@@ -159,17 +135,55 @@ You can also quickly navigate to where a symbol is defined by using the Go to De
 
 To go to a symbol's definition, place your cursor on the symbol anywhere its used in your code and then press `kb(editor.action.goToDeclaration)`. Alternatively, you can choose __Go to Definition__ from the context menu (right-click, then choose __Go to Definition__). When there's only one definition of the symbol, you'll navigate directly to its location, otherwise the competing definitions are displayed in a peek window as described in the previous section and you have to choose the definition that you want to go to.
 
-## Debugging
+# Building your application in VS Code
+To build your application, you will first need to generate a `tasks.json` file.
 
-After you have set up the basics of your debugging environment as specified in [Getting Started](/docs/languages/cpp.md#getting-started), you can learn more details about debugging C/C++ in this section.
+* Open the **Command Palette** (`kb(workbench.action.showCommands)`).
+* Select the **Tasks: Configure Task Runner** command and you will see a list of task runner templates.
+* Select **Others** to create a task which runs an external command.
+* Change the `command` to the command line expression you use to build your application (e.g. `g++ -g main.cpp`).
+* Add any required args (e.g. `-g` to build for debugging).
+* You can now build your application with (`kb(workbench.action.tasks.build)`)
 
+You should now see a `tasks.json` file in your workspace `.vscode` folder that looks something like:
+
+```json
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "taskName": "echo",
+            "command": "g++",
+            "type": "shell",
+            "args": ["-g", "main.cpp"]         
+        }    ]
+}
+```
+
+For more information on tasks, see [Integrate with External Tools via Tasks](/docs/editor/tasks).
+
+# Debugging your application in VS Code
+## Create a "launch.json" file
+To debug your application, you will need to generate a `launch.json` file.
+
+* Navigate to the Debug view by clicking the Debug icon in the Sidebar.
+* In the **Debug** view, click the **Configure** icon.
+* Select `C++ (GDB/LLDB)` (to use GDB or LLDB) or `C++ (Windows)` (to use the Visual Studio Windows Debugger) from the **Select Environment** dropdown. This creates a `launch.json` file for editing with two configurations:
+  * **C++ Launch** defines the properties for launching your application when you start debugging.
+  * **C++ Attach** defines the properties for attaching to a process that's already running.
+* Update the `program` property with the path to the program you are debugging.
+* If you want your application to build when you start debugging, add a `preLaunchTask` property with the name of the build task you created in `tasks.json` ("g++" in the example above).
+
+To learn more, see [Configuring launch.json for C/C++ debugging](https://github.com/Microsoft/vscode-cpptools/blob/master/launch.md). If you are debugging with GDB on Windows, see [Windows Debugging on Cygwin/MinGW](#debug_windows_gdb).
+
+## Use a debugger of your choice
 VS Code supports the following debuggers for C/C++ depending on the operating system you are using:
 
 * **Linux**: GDB
 * **OS X**: LLDB or GDB
 * **Windows**: the Visual Studio Windows Debugger or GDB (using Cygwin or MinGW)
 
-### Windows Debugging with GDB on Cygwin/MinGW <a name="debug_windows_gdb"></a>
+## Windows Debugging with GDB on Cygwin/MinGW <a name="debug_windows_gdb"></a>
 
 You can debug Windows applications created using Cygwin or MinGW by using VS Code. To use Cygwin or MinGW debugging features, the debugger path must be set manually in the launch configuration (`launch.json`). To debug your Cygwin or MinGW application, add the `miDebuggerPath` property and set its value to the location of the corresponding gdb.exe for your Cygwin or MinGW environment.
 
@@ -303,10 +317,6 @@ Read on to find out about:
 **Q: My project won't load.**
 
 **A:** VS Code doesn't currently support C++ project files, instead it considers a directory of your choosing to be the workspace of your project. Source code files inside that directory and its sub-directories are part of the workspace.
-
-**Q: IntelliSense isn't working.**
-
-**A:** In this release, IntelliSense isn't supported. We plan to enable this and other features in future releases.
 
 **Q: How do I build/run my project?**
 
